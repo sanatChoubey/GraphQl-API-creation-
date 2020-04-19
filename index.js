@@ -24,9 +24,7 @@ const Author = [
     }
 ]  
 const typeDefs = gql`
-  # Comments in GraphQL strings (such as this one) start with the hash (#) symbol.
-
-  # This "Book" type defines the queryable fields for every book in our data source.
+ 
   type Book {
     title: String
     author: String
@@ -40,6 +38,9 @@ const typeDefs = gql`
     books: [Book]
     Author: [Author]
   }
+  type Mutation {
+    addBook(title: String, author: String): Book
+  }
 `;
 const resolvers = {
     Query: {
@@ -47,7 +48,11 @@ const resolvers = {
     },
     Query: {
         Author: ()=> Author
+    },
+    Mutation: {
+        addBook : (title, author)=>   author
     }
+    
   };
   const server = new ApolloServer({ typeDefs, resolvers });
   console.log('call')
